@@ -3,17 +3,15 @@ import sys
 import json
 
 
-def find_site_packages():
+def find_pytorch():
     for p in sys.path:
-        if p.endswith('site-packages'):
-            return p
+        candidate = os.path.join(p, 'torch')
+        if os.path.exists(candidate):
+            return candidate
     print('site-packages not found!')
     exit(1)
 
-out_path = os.path.join(find_site_packages(), 'torch')
-if not os.path.exists(out_path):
-    print('pytorch not found!')
-    exit(2)
+out_path = find_pytorch()
 
 print('pytorch root is', out_path)
 
